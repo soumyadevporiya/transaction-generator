@@ -6,6 +6,7 @@ import datetime
 from google.cloud import storage
 from confluent_kafka import Producer
 from kafka import KafkaConsumer
+from kafka import KafkaProducer
 import socket
 import json
 import fsspec
@@ -52,11 +53,13 @@ if __name__ == '__main__':
     NUMBER_OF_SAMPLES = 9_00_00
 
     consumer = KafkaConsumer('signal', bootstrap_servers=['35.222.33.26:9094'], auto_offset_reset='latest')
+    producer_1 = KafkaProducer(bootstrap_servers=['35.222.33.26:9094'], api_version=(0, 10))
 
     for message in consumer:
         print(message.value)
         producer = Producer(conf)
-        print(datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S") + "Z")
+        start_time = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S") + "Z"
+        producer_1.send('reply', json.dumps(start_time).encode('utf-8'))
         for i in range(7_00_00_01, NUMBER_OF_SAMPLES + 7_00_00_01):
             creditDebit_rand_int = random.randint(0, 1)
             if creditDebit_rand_int == 0:
@@ -112,4 +115,6 @@ if __name__ == '__main__':
                              key=json.dumps(key).encode('utf-8'))
 
         producer.flush()
-        print(datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S") + "Z")
+        end_time = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S") + "Z"
+        producer_1.send('reply', json.dumps(end_time).encode('utf-8'))
+        producer_1.close()

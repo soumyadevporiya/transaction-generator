@@ -1,9 +1,17 @@
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: transaction-generator
 spec:
-  restartPolicy: Never
-  containers:
-  - name: create-pod
-    image: gcr.io/tough-anagram-388502/transaction-generator:latest
+  replicas: 50
+  selector:
+    matchLabels:
+      app: transaction-generator
+  template:
+      metadata:
+        labels:
+          app: transaction-generator
+      spec:
+        containers:
+        - name: transaction-generator
+          image: gcr.io/tough-anagram-388502/transaction-generator:latest
