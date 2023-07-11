@@ -1,0 +1,10 @@
+pandas
+kafka-python
+confluent-kafka
+gcsfs
+fsspec
+google-cloud-storage
+google-cloud-bigquery-storage
+pyarrow
+pandas
+kubernetes
