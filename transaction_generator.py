@@ -16,11 +16,11 @@ if __name__ == '__main__':
 
     # Read dataframe from a pickle file
     # df_external_table = pd.read_pickle('C:/Users/Satyaki/df_external_table.pkl')
-    df_external_table = pd.read_pickle('gs://tran_datagen/df_external_table.pkl')
+    df_external_table = pd.read_pickle('gs://txn_datagen/df_external_table.pkl')
     # print(df_external_table)
 
     # df_account_table = pd.read_pickle('C:/Users/Satyaki/df_account_table.pkl')
-    df_account_table = pd.read_pickle('gs://tran_datagen/df_account_table.pkl')
+    df_account_table = pd.read_pickle('gs://txn_datagen/df_account_table.pkl')
     # print(df_account_table)
 
     external_table_length = len(df_external_table)
